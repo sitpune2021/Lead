@@ -1,0 +1,69 @@
+class ServiceLeadProduct {
+  final String? id;
+  final String? serviceId;
+  final String? imagetitle;
+  final String? imagedescription;
+  final String? imagefilename;
+  final String? imagefilepath;
+  final String? videotitle;
+  final String? videodescription;
+  final String? videofilename;
+  final String? videofilepath;
+  final String? documenttitle;
+  final String? documentdescription;
+  final String? documentfilename;
+  final String? documentfilepath;
+  final String? howitworks;
+  final String? tandc;
+  final String? faqs;
+  final String? activeFlag;
+  final String? deleteFlag;
+
+  ServiceLeadProduct({
+    required this.id,
+    required this.serviceId,
+    required this.imagetitle,
+    required this.imagedescription,
+    required this.imagefilename,
+    required this.imagefilepath,
+    required this.videotitle,
+    required this.videodescription,
+    required this.videofilename,
+    required this.videofilepath,
+    required this.documenttitle,
+    required this.documentdescription,
+    required this.documentfilename,
+    required this.documentfilepath,
+    required this.howitworks,
+    required this.tandc,
+    required this.faqs,
+    required this.activeFlag,
+    required this.deleteFlag,
+
+  });
+
+  factory ServiceLeadProduct.fromJson(Map<String, dynamic> json) {
+    return ServiceLeadProduct(
+      id: json['_id'] as String?,
+      serviceId: json['serviceId'] as String?,
+      imagetitle: json['imagetitle'] as String?,
+      imagedescription: json['imagedescription'] as String?,
+      imagefilename: json['imagefilename'] as String?,
+      imagefilepath: json['imagefilepath'] as String?,
+      videotitle: json['videotitle'] as String?,
+      videodescription: json['videodescription'] as String?,
+      videofilename: json['videofilename'] as String?,
+      videofilepath: json['videofilepath'] as String?,
+      documenttitle: json['documenttitle'] as String?,
+      documentdescription: json['documentdescription'] as String?,
+      documentfilename: json['documentfilename'] as String?,
+      documentfilepath: json['documentfilepath'] as String?,
+      howitworks: json['howitworks'] as String?,
+      tandc: json['tandc'] as String?,
+      faqs: json['faqs'] as String?,
+      activeFlag: json['activeFlag'] as String?,
+      deleteFlag: json['deleteFlag'] as String?,
+
+    );
+  }
+}
