@@ -3,6 +3,7 @@
 // import 'package:bizbooster/pages/login_screen.dart';
 // import 'package:bizbooster/pages/registration.dart';
 // import 'package:bizbooster/pages/webinar_screen.dart';
+import 'package:bizbooster/pages/bottom_nav_bar.dart';
 import 'package:bizbooster/pages/dashboard.dart';
 import 'package:bizbooster/screens/Lead_Details_onboarding/lead_onboard_detail_screen.dart';
 import 'package:bizbooster/screens/Login/login_screen.dart';
@@ -22,6 +23,7 @@ Future<void> main() async {
 
 class MyApp extends StatelessWidget {
   final bool isLoggedIn;
+
   const MyApp({Key? key, required this.isLoggedIn}) : super(key: key);
 
   @override
@@ -32,14 +34,12 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.lightBlueAccent),
         useMaterial3: true,
       ),
-      home: isLoggedIn
-          ? const DashboardPage(title: "Dashboard")
-          : const LoginScreen(),
+      home: isLoggedIn ? BottomNavBar() : const LoginScreen(),
       // home: isLoggedIn ? const OnboardingScreen() : const LoginScreen(),
       // home: WebinarScreen(),
       // home: const loginScreen(),
       // home: const Register(),
-      // home: const DashboardPage(title: "Dashboard"),
+      // home: BottomNavBar(),
       // home: MyDashboard(),
     );
   }

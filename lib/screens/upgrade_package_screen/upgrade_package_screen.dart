@@ -42,23 +42,15 @@ class FranchiseScreen extends StatelessWidget {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            const BannerWidget(
-              image: "assets/images/franchise.jpg",
-            ),
+            // const BannerWidget(
+            //   image: "assets/images/franchise.jpg",
+            // ),
             Padding(
-              padding: const EdgeInsets.all(10.0),
-              child: GridView.builder(
+              padding: const EdgeInsets.all(5.0),
+              child: ListView.builder(
                 physics: const NeverScrollableScrollPhysics(),
                 shrinkWrap: true,
-                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 2,
-                  crossAxisSpacing: 10,
-                  mainAxisSpacing: 20,
-                  mainAxisExtent: 329,
-                  // childAspectRatio: 1.2,
-                  childAspectRatio: 1.1,
-                ),
-                itemCount: 4,
+                itemCount: offers.length, // Dynamic item count
                 itemBuilder: (context, index) {
                   return FranchiseCard(offer: offers[index]);
                 },

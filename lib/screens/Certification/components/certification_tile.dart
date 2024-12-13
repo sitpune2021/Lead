@@ -1,5 +1,6 @@
 import 'package:bizbooster/screens/Certification/components/course_details.dart';
 import 'package:flutter/material.dart';
+import 'package:shimmer/shimmer.dart';
 
 class CertificationTile extends StatelessWidget {
   final String title;
@@ -61,6 +62,22 @@ class CertificationTile extends StatelessWidget {
                   height: 150,
                   width: double.infinity,
                   fit: BoxFit.cover,
+                  loadingBuilder: (context, child, loadingProgress) {
+                    if (loadingProgress == null) {
+                      return child; // Image loaded
+                    } else {
+                      // Shimmer placeholder
+                      return Shimmer.fromColors(
+                        baseColor: Colors.grey[300]!,
+                        highlightColor: Colors.grey[100]!,
+                        child: Container(
+                          height: 150,
+                          width: double.infinity,
+                          color: Colors.grey[300],
+                        ),
+                      );
+                    }
+                  },
                 ),
               ),
             ),

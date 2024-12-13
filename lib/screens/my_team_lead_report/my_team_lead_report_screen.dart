@@ -149,9 +149,22 @@ class _MyTeamLeadReportScreenState extends State<MyTeamLeadReportScreen> {
                     //   },
                     //   child:
                     // ),
-                    _buildStatusCard("Completed", Colors.green, 1),
-                    _buildStatusCard("In Progress",
-                        const Color.fromARGB(255, 247, 224, 24), 0),
+                    _buildStatusCard(
+                        "Completed",
+                        Colors.green,
+                        1,
+                        Icon(Icons.check_circle,
+                            size: 20, color: Colors.green)),
+
+                    _buildStatusCard(
+                        "In Progress",
+                        const Color.fromARGB(255, 247, 224, 24),
+                        0,
+                        Icon(
+                          Icons.auto_mode_outlined,
+                          size: 20,
+                          color: Color.fromARGB(255, 247, 224, 24),
+                        )),
                     // InkWell(
                     //   onTap: () {
                     //     Navigator.push(
@@ -162,8 +175,14 @@ class _MyTeamLeadReportScreenState extends State<MyTeamLeadReportScreen> {
                     //   },
                     //   child:
                     // ),
-                    _buildStatusCard("Rejected", Colors.red, 0),
-                    _buildStatusCard("Expired", Colors.grey, 1),
+                    _buildStatusCard("Rejected", Colors.red, 0,
+                        Icon(Icons.error, size: 20, color: Colors.red)),
+                    _buildStatusCard(
+                        "Expired",
+                        Colors.red,
+                        1,
+                        Icon(Icons.timer_off_rounded,
+                            size: 20, color: Colors.red)),
                   ],
                 ),
               ),
@@ -236,14 +255,15 @@ class _MyTeamLeadReportScreenState extends State<MyTeamLeadReportScreen> {
   }
 
   // Method to create status card widget
-  Widget _buildStatusCard(String label, Color color, int count) {
+  Widget _buildStatusCard(String label, Color color, int count, Icon icon) {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Column(
         children: [
           Row(
             children: [
-              Icon(Icons.check_circle, size: 16, color: color),
+              // Icon(Icons.check_circle, size: 16, color: color),
+              icon,
               const SizedBox(
                 width: 5,
               ),

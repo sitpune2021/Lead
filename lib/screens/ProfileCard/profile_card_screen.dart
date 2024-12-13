@@ -1,10 +1,15 @@
+import 'dart:io';
+
 import 'package:bizbooster/screens/login/login_screen.dart';
 import 'package:bizbooster/screens/my_kyc/my_kyc_screen.dart';
 import 'package:bizbooster/screens/profile_section/Basic_Profile_Information/basic_profile_screen.dart';
 import 'package:bizbooster/services/session.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:http/http.dart' as http;
 
-class ProfileCardScreen extends StatelessWidget {
+class ProfileCardScreen extends StatefulWidget {
   final String name;
   final String mobileno;
   final String image;
@@ -14,6 +19,85 @@ class ProfileCardScreen extends StatelessWidget {
       required this.name,
       required this.mobileno,
       required this.image});
+
+  @override
+  State<ProfileCardScreen> createState() => _ProfileCardScreenState();
+}
+
+class _ProfileCardScreenState extends State<ProfileCardScreen> {
+  late String _name;
+  late String _mobileNo;
+  late String _imageUrl;
+  File? _newImage; // Store the new image file
+
+  @override
+  void initState() {
+    super.initState();
+    _name = widget.name;
+    _mobileNo = widget.mobileno;
+    _imageUrl = widget.image;
+  }
+
+  Future<void> _pickImage() async {
+    final picker = ImagePicker();
+    final pickedFile = await picker.pickImage(source: ImageSource.gallery);
+
+    if (pickedFile != null) {
+      setState(() {
+        _newImage = File(pickedFile.path);
+      });
+
+      // Upload the selected image
+      await _uploadImage(_newImage!);
+    }
+  }
+
+  Future<void> _uploadImage(File imageFile) async {
+    final uri = Uri.parse(
+        "http://43.205.22.150:5000/upload"); // Replace with your upload URL
+    final request = http.MultipartRequest("POST", uri);
+
+    request.files.add(
+      await http.MultipartFile.fromPath(
+        'image', // Parameter name expected by your server
+        imageFile.path,
+      ),
+    );
+
+    try {
+      final response = await request.send();
+      if (response.statusCode == 200) {
+        // Handle success
+        final responseBody = await response.stream.bytesToString();
+        print("Upload successful: $responseBody");
+      } else {
+        // Handle failure
+        Fluttertoast.showToast(
+          msg: "Uplaod failed check internet connection",
+          toastLength: Toast.LENGTH_SHORT, // or Toast.LENGTH_LONG
+          gravity: ToastGravity
+              .BOTTOM, // position of the toast (TOP, BOTTOM, CENTER)
+          timeInSecForIosWeb: 1, // iOS/ Web duration
+          backgroundColor: Colors.black, // background color of toast
+          textColor: Colors.white, // text color
+          fontSize: 16.0, // font size
+        );
+        print("Upload failed: ${response.statusCode}");
+      }
+    } catch (e) {
+      print("Error uploading image: $e");
+    }
+  }
+// class ProfileCardScreen extends StatelessWidget {
+//   final String name;
+//   final String mobileno;
+//   final String image;
+
+//   const ProfileCardScreen(
+//       {super.key,
+//       required this.name,
+//       required this.mobileno,
+//       required this.image});
 
   @override
   Widget build(BuildContext context) {
@@ -65,26 +149,55 @@ class ProfileCardScreen extends StatelessWidget {
                                 //   color: Colors.blueGrey,
                                 // ),
                                 ClipOval(
-                                  child: Image.network(
-                                    "http://43.205.22.150:5000/users/$image",
-                                    width: 96,
-                                    height: 96,
-                                    fit: BoxFit.cover,
-                                    errorBuilder: (context, error, stackTrace) {
-                                      return Container(
+                                  child: Stack(
+                                    children: [
+                                      Image.network(
+                                        "http://43.205.22.150:5000/users/$_imageUrl",
                                         width: 96,
                                         height: 96,
-                                        decoration: BoxDecoration(
-                                          shape: BoxShape.circle,
-                                          color: Colors.blue[50],
+                                        fit: BoxFit.cover,
+                                        errorBuilder:
+                                            (context, error, stackTrace) {
+                                          return Container(
+                                            width: 96,
+                                            height: 96,
+                                            decoration: BoxDecoration(
+                                              shape: BoxShape.circle,
+                                              color: Colors.blue[50],
+                                            ),
+                                            child: const Icon(
+                                              Icons.person,
+                                              size: 60,
+                                              color: Colors.blueGrey,
+                                            ),
+                                          );
+                                        },
+                                      ),
+                                      Positioned(
+                                        bottom: 15,
+                                        right: 5,
+                                        child: GestureDetector(
+                                          onTap:
+                                              _pickImage, // Call the function to pick an image
+                                          child: Container(
+                                            width: 30,
+                                            height: 30,
+                                            decoration: BoxDecoration(
+                                              shape: BoxShape.circle,
+                                              color: Colors.blue,
+                                              border: Border.all(
+                                                  color: Colors.white,
+                                                  width: 2),
+                                            ),
+                                            child: const Icon(
+                                              Icons.edit,
+                                              color: Colors.white,
+                                              size: 16,
+                                            ),
+                                          ),
                                         ),
-                                        child: const Icon(
-                                          Icons.person,
-                                          size: 60,
-                                          color: Colors.blueGrey,
-                                        ),
-                                      );
-                                    },
+                                      ),
+                                    ],
                                   ),
                                 ),
                               ],
@@ -93,7 +206,7 @@ class ProfileCardScreen extends StatelessWidget {
                                 height:
                                     16), // Spacing between circle and content
                             Text(
-                              name,
+                              _name,
                               textAlign: TextAlign.center,
                               style: TextStyle(
                                 fontSize: 24,
@@ -102,7 +215,7 @@ class ProfileCardScreen extends StatelessWidget {
                             ),
                             const SizedBox(height: 8),
                             Text(
-                              mobileno,
+                              _mobileNo,
                               textAlign: TextAlign.center,
                               style: TextStyle(
                                 fontSize: 16,

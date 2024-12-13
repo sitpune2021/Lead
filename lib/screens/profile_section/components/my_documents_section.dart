@@ -166,7 +166,7 @@ Widget _buildSocialMediaIcons() {
         icon: const Icon(
           Icons.facebook,
           color: Colors.blue,
-          size: 30,
+          size: 35,
         ),
         onPressed: () {
           // Handle Facebook link
@@ -174,8 +174,8 @@ Widget _buildSocialMediaIcons() {
       ),
       IconButton(
         icon: FaIcon(
-          FontAwesomeIcons.twitter,
-          color: Colors.blue,
+          FontAwesomeIcons.instagram,
+          color: Colors.red,
           size: 30,
         ),
         onPressed: () {
@@ -183,8 +183,8 @@ Widget _buildSocialMediaIcons() {
         },
       ),
       IconButton(
-        icon: const Icon(
-          Icons.camera_alt,
+        icon: FaIcon(
+          FontAwesomeIcons.linkedin,
           color: Colors.blue,
           size: 30,
         ),
@@ -194,8 +194,8 @@ Widget _buildSocialMediaIcons() {
       ),
       IconButton(
         icon: const FaIcon(
-          FontAwesomeIcons.telegram,
-          color: Colors.blue,
+          FontAwesomeIcons.whatsapp,
+          color: Colors.green,
           size: 30,
         ),
         onPressed: () {

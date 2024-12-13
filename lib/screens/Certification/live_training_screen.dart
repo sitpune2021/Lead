@@ -55,7 +55,7 @@ class _LiveTrainingScreenState extends State<LiveTrainingScreen> {
                 inactiveFgColor: Colors.white,
                 initialLabelIndex: _currentToggleIndex,
                 totalSwitches: 2,
-                labels: const ['Webinar', 'Recorded Webinar'],
+                labels: const ['Live Training', 'Recorded Training'],
                 radiusStyle: true,
                 onToggle: (index) {
                   setState(() {

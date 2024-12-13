@@ -30,6 +30,7 @@ import 'package:bizbooster/widgets/onboarding_card.dart';
 import 'package:bizbooster/widgets/pending_verification.dart';
 import 'package:bizbooster/widgets/user_alert.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 
 class DashboardPage extends StatefulWidget {
@@ -42,7 +43,49 @@ class DashboardPage extends StatefulWidget {
 }
 
 class _DashboardPageState extends State<DashboardPage> {
-  int _currentIndex = 0;
+  @override
+  void initState() {
+    super.initState();
+    _checkInternetConnection();
+  }
+
+  Future<void> _checkInternetConnection() async {
+    var connectivityResult = await Connectivity().checkConnectivity();
+
+    if (connectivityResult == ConnectivityResult.none) {
+      _showNoInternetDialog();
+    } else {
+      // Optionally check if there's actual internet access
+      try {
+        final result = await InternetAddress.lookup('example.com');
+        if (result.isEmpty || result[0].rawAddress.isEmpty) {
+          _showNoInternetDialog();
+        }
+      } catch (_) {
+        _showNoInternetDialog();
+      }
+    }
+  }
+
+  void _showNoInternetDialog() {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text('No Internet Connection'),
+        content:
+            const Text('Please check your internet connection and try again.'),
+        actions: [
+          TextButton(
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+            child: const Text('OK'),
+          ),
+        ],
+      ),
+    );
+  }
+
   List<String> _getImageSliderList() {
     return [
       'https://plus.unsplash.com/premium_photo-1664474619075-644dd191935f?fm=jpg&q=60&w=3000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8aW1hZ2V8ZW58MHx8MHx8fDA%3D',
@@ -103,16 +146,6 @@ class _DashboardPageState extends State<DashboardPage> {
           ),
         ),
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        // leading: Padding(
-        //   padding: const EdgeInsets.only(left: 8.0),
-        //   child: SizedBox(
-        //     width: 10, // Set the desired width
-        //     height: 10, // Set the desired height
-        //     child: Image.asset(
-        //       "assets/images/user.png",
-        //     ),
-        //   ),
-        // ),
         actions: [
           Padding(
             padding: const EdgeInsets.all(8.0),
@@ -131,76 +164,7 @@ class _DashboardPageState extends State<DashboardPage> {
           ),
         ],
       ),
-      // drawer: Drawer(
-      //   child: ListView(
-      //     // Important: Remove any padding from the ListView.
-      //     padding: EdgeInsets.zero,
-      //     children: [
-      //       UserAccountsDrawerHeader(
-      //         decoration: BoxDecoration(color: Colors.blue[200]),
-      //         accountName: const Text(
-      //           "",
-      //           style: TextStyle(
-      //             fontWeight: FontWeight.bold,
-      //           ),
-      //         ),
-      //         accountEmail: const Text(
-      //           "",
-      //           style: TextStyle(
-      //             fontWeight: FontWeight.bold,
-      //           ),
-      //         ),
-      //         currentAccountPicture: const FlutterLogo(),
-      //       ),
-      //       ListTile(
-      //         leading: const Icon(
-      //           Icons.home,
-      //         ),
-      //         title: const Text('Home'),
-      //         onTap: () {
-      //           Navigator.pop(context);
-      //         },
-      //       ),
-      //       // ListTile(
-      //       //   leading: const Icon(
-      //       //     Icons.train,
-      //       //   ),
-      //       //   title: const Text('Page 2'),
-      //       //   onTap: () {
-      //       //     Navigator.pop(context);
-      //       //   },
-      //       // ),
-      //       ListTile(
-      //         leading: const Icon(
-      //           Icons.logout,
-      //         ),
-      //         title: const Text('Logout'),
-      //         onTap: () {
-      //           showLogoutDialog(context);
-      //         },
-      //       ),
-      //       // const AboutListTile(
-      //       //   // <-- SEE HERE
-      //       //   icon: Icon(
-      //       //     Icons.info,
-      //       //   ),
-      //       //   child: Text('About app'),
-      //       //   applicationIcon: Icon(
-      //       //     Icons.local_play,
-      //       //   ),
-      //       //   applicationName: 'My Cool App',
-      //       //   applicationVersion: '1.0.25',
-      //       //   applicationLegalese: '© 2019 Company',
-      //       //   aboutBoxChildren: [
-      //       //     ///Content goes here...
-      //       //   ],
-      //       // ),
-      //     ],
-      //   ),
-      // ),
-
       body: SafeArea(child: _buildUI()),
-      bottomNavigationBar: _bottomNavBar(context),
     );
   }
 
@@ -400,7 +364,7 @@ class _DashboardPageState extends State<DashboardPage> {
                   // onboarding widget class
                   // const OnboardingGrid(),  // old design
                   SizedBox(
-                    height: 377,
+                    height: 311,
                     child: ListView.builder(
                       scrollDirection: Axis.horizontal,
                       padding:
@@ -560,7 +524,7 @@ class _DashboardPageState extends State<DashboardPage> {
 
   Widget buildIconColumn(String imagePath, String label) {
     return Padding(
-      padding: const EdgeInsets.only(left: 8.0),
+      padding: const EdgeInsets.only(left: 2.0),
       child: Column(
         children: [
           CircleAvatar(
@@ -578,7 +542,7 @@ class _DashboardPageState extends State<DashboardPage> {
           ),
           const SizedBox(height: 5),
           Container(
-            width: 100,
+            width: 90,
             child: Text(
               label,
               style: const TextStyle(fontSize: 14),
@@ -903,12 +867,18 @@ Widget buildIconColumn(String imagePath, String label) {
             radius: 35,
             backgroundColor: Colors.white,
             child: ClipOval(
-              child: Image.network(
-                "$moduleimageurl$imagePath",
-                fit: BoxFit.cover,
-                width: 70,
-                height: 70,
-              ),
+              child: Image.network("$moduleimageurl$imagePath",
+                  fit: BoxFit.cover,
+                  width: 70,
+                  height: 70, errorBuilder: (BuildContext context, Object error,
+                      StackTrace? stackTrace) {
+                // You can return any widget here when the image fails to load
+                return Icon(
+                  Icons.error, // Display an error icon
+                  size: 70,
+                  color: Colors.red, // Customize the color
+                );
+              }),
             ),
           ),
         ),
@@ -1090,32 +1060,6 @@ Widget buildIconCard(String imagePath, String label) {
   );
 }
 
-Widget _bottomNavBar(BuildContext context) {
-  return NavigationBar(
-      backgroundColor: Colors.white,
-      height: 70,
-      // onDestinationSelected: (int index) {
-      //   if (index == 3) {
-      //     // Index 3 corresponds to "Support"
-      //     Navigator.push(
-      //       context,
-      //       MaterialPageRoute(builder: (context) => const SupportScreen()),
-      //     );
-      //   }
-      // },
-      destinations: [
-        NavigationDestination(
-            icon: Icon(Icons.home,
-                color: Theme.of(context).colorScheme.inversePrimary),
-            label: "Home"),
-        const NavigationDestination(
-            icon: Icon(Icons.laptop_mac_rounded), label: "Marketing"),
-        const NavigationDestination(icon: Icon(Icons.book), label: "Academy"),
-        const NavigationDestination(
-            icon: Icon(Icons.support_agent), label: "Support")
-      ]);
-}
-
 // mylead earning and my team lead are aligned .
 Widget _earning(BuildContext context) {
   return Padding(
@@ -1131,11 +1075,12 @@ Widget _earning(BuildContext context) {
             );
           },
           child: _buildCardEarningnew(
-              '456',
+              '45687.00',
               'My Earning',
               Colors.blue,
               const Icon(Icons.account_balance_wallet,
-                  color: Colors.white, size: 32)),
+                  color: Colors.white, size: 32),
+              Color.fromARGB(255, 196, 152, 53)),
         ),
         GestureDetector(
           onTap: () {
@@ -1145,11 +1090,11 @@ Widget _earning(BuildContext context) {
             );
           },
           child: _buildCardEarningnew(
-            '105',
-            'My Lead',
-            Colors.green,
-            const Icon(Icons.leaderboard, color: Colors.white, size: 32),
-          ),
+              '687',
+              'My Lead',
+              Colors.green,
+              const Icon(Icons.leaderboard, color: Colors.white, size: 32),
+              Color.fromARGB(255, 0, 123, 9)),
         ),
         GestureDetector(
           onTap: () {
@@ -1158,8 +1103,14 @@ Widget _earning(BuildContext context) {
               MaterialPageRoute(builder: (context) => const MyTeamLeadScreen()),
             );
           },
-          child: _buildCardEarningnew('456', 'Team Lead', Colors.green[700]!,
-              const Icon(Icons.leaderboard, color: Colors.white, size: 32)),
+          // child: _buildCardEarningnew('456', 'Team Lead', Colors.green[700]!,
+          //     const Icon(Icons.leaderboard, color: Colors.white, size: 32)),
+          child: _buildCardEarningnew(
+              '456',
+              'Team Lead',
+              Colors.green[700]!,
+              const Icon(Icons.leaderboard, color: Colors.white, size: 32),
+              Color.fromARGB(255, 126, 177, 43)),
         ),
       ],
     ),
@@ -1217,14 +1168,14 @@ Widget _buildCardEarning(String amount, String label, Color color) {
 }
 
 Widget _buildCardEarningnew(
-    String amount, String label, Color color, Icon icon) {
+    String amount, String label, Color color, Icon icon, Color bgcolor) {
   return Container(
-    width: 130,
-    padding: const EdgeInsets.all(16),
+    width: 125,
+    padding: const EdgeInsets.only(top: 8, left: 0, right: 0, bottom: 0),
     decoration: BoxDecoration(
-      color: Colors.grey[200], // Light grey background
-      borderRadius: BorderRadius.circular(12),
-    ),
+        color: Colors.grey[200], // Light grey background
+        borderRadius: BorderRadius.circular(8),
+        border: Border.all(color: Colors.grey)),
     child: Column(
       mainAxisSize: MainAxisSize.min,
       children: [
@@ -1244,17 +1195,27 @@ Widget _buildCardEarningnew(
             ),
           ],
         ),
-        const SizedBox(height: 8),
+        const SizedBox(height: 2),
         // Label Text
-        Text(
-          label,
-          style: const TextStyle(
-            color: Colors.black,
-            fontSize: 16,
-            fontWeight: FontWeight.w400,
+        Container(
+          width: double.infinity,
+          padding: const EdgeInsets.only(top: 0, left: 0, right: 0, bottom: 0),
+          decoration: BoxDecoration(
+              color: bgcolor,
+              // color: Color.fromARGB(255, 196, 152, 53),
+              borderRadius: BorderRadius.circular(8),
+              border: Border.all(color: Colors.grey)),
+          child: Text(
+            label,
+            style: const TextStyle(
+              color: Colors.white,
+              fontSize: 16,
+              fontWeight: FontWeight.bold,
+            ),
+            textAlign: TextAlign.center,
           ),
         ),
-        const SizedBox(height: 4),
+
         // Amount Text
       ],
     ),
@@ -1523,4 +1484,25 @@ Future<void> showLogoutDialog(BuildContext context) async {
       );
     },
   );
+}
+
+class Page3 extends StatelessWidget {
+  const Page3({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      color: const Color.fromARGB(255, 255, 255, 255),
+      child: Center(
+        child: Text(
+          "Marketing",
+          style: TextStyle(
+            color: Colors.green[900],
+            fontSize: 45,
+            fontWeight: FontWeight.w500,
+          ),
+        ),
+      ),
+    );
+  }
 }

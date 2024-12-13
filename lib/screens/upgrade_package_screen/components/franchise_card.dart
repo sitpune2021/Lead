@@ -10,7 +10,7 @@ class FranchiseCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Card(
       color: Colors.white,
-      elevation: 4,
+      elevation: 3,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(10),
       ),
@@ -18,27 +18,6 @@ class FranchiseCard extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Row(
-            children: [
-              Expanded(
-                child: Padding(
-                  padding: const EdgeInsets.only(
-                      left: 8.0, right: 8.0, bottom: 5.0, top: 5.0),
-                  child: Text(
-                    textAlign: TextAlign.center,
-                    offer.title,
-                    overflow: TextOverflow.ellipsis,
-                    maxLines: 1,
-                    style: const TextStyle(
-                      // backgroundColor: Colors.amber,
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ),
-              ),
-            ],
-          ),
           Padding(
             padding: const EdgeInsets.only(left: 5.0, right: 5.0, bottom: 5.0),
             child: ClipRRect(
@@ -52,11 +31,32 @@ class FranchiseCard extends StatelessWidget {
               // ),
               child: Image.asset(
                 offer.image,
-                fit: BoxFit.fill,
-                height: 150, // Adjust the height according to your needs
+                fit: BoxFit.cover,
+                height: 250, // Adjust the height according to your needs
                 width: double.infinity,
               ),
             ),
+          ),
+          Row(
+            children: [
+              Expanded(
+                child: Padding(
+                  padding: const EdgeInsets.only(
+                      left: 8.0, right: 8.0, bottom: 5.0, top: 5.0),
+                  child: Text(
+                    textAlign: TextAlign.start,
+                    offer.title,
+                    overflow: TextOverflow.ellipsis,
+                    maxLines: 1,
+                    style: const TextStyle(
+                      // backgroundColor: Colors.amber,
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+              ),
+            ],
           ),
           Row(
             children: [
@@ -112,8 +112,8 @@ class FranchiseCard extends StatelessWidget {
                     ),
                   ),
                   child: const Text(
-                    'Know More',
-                    style: TextStyle(fontSize: 14, color: Colors.white),
+                    'Upgrade Package',
+                    style: TextStyle(fontSize: 16, color: Colors.white),
                   ),
                 ),
               ),

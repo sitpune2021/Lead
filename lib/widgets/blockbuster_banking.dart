@@ -148,7 +148,7 @@ class BlockbusterBanking extends StatelessWidget {
             ),
           ),
           SizedBox(
-            height: 385,
+            height: 319,
             child: ListView.builder(
               scrollDirection: Axis.horizontal,
               padding: const EdgeInsets.all(8),

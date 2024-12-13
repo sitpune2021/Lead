@@ -204,7 +204,7 @@ class BlockbusterBranding extends StatelessWidget {
 
   Widget buildIconColumn(String imagePath, String label) {
     return Padding(
-      padding: const EdgeInsets.only(bottom: 8, left: 8, right: 8),
+      padding: const EdgeInsets.only(bottom: 8, left: 0, right: 0),
       child: Column(
         children: [
           Container(
@@ -235,7 +235,7 @@ class BlockbusterBranding extends StatelessWidget {
           ),
           const SizedBox(height: 5),
           Container(
-            width: 100,
+            width: 85,
             child: Text(
               label,
               style: const TextStyle(fontSize: 14),

@@ -325,6 +325,7 @@ class Cardd extends StatelessWidget {
             // Earnings and Share Button Section
             // Earnings and Share Button Section
             Container(
+              margin: EdgeInsets.only(left: 10),
               padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
               decoration: const BoxDecoration(
                   // color: Colors.yellow.shade100,

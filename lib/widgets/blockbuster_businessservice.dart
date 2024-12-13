@@ -68,7 +68,7 @@ class BlockbusterBusinessservice extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.only(top: 0.0),
             child: SizedBox(
-              height: 390,
+              height: 380,
               child: ListView.builder(
                 scrollDirection: Axis.horizontal,
                 padding: const EdgeInsets.only(bottom: 8, left: 8, right: 8),
@@ -160,7 +160,7 @@ class BlockbusterBusinessservice extends StatelessWidget {
 
   Widget buildIconColumn(String imagePath, String label) {
     return Padding(
-      padding: const EdgeInsets.all(8.0),
+      padding: const EdgeInsets.only(top: 8.0, right: 2),
       child: Column(
         children: [
           CircleAvatar(
@@ -178,7 +178,7 @@ class BlockbusterBusinessservice extends StatelessWidget {
           ),
           const SizedBox(height: 5),
           Container(
-            width: 100,
+            width: 80,
             child: Text(
               label,
               style: const TextStyle(fontSize: 14),
@@ -272,7 +272,7 @@ class FranchiseCard extends StatelessWidget {
                 borderRadius: BorderRadius.all(Radius.circular(8)),
                 child: Image.network(
                   imageurl, // Replace with your image asset path
-                  height: 250,
+                  height: 200,
                   fit: BoxFit.cover,
                   // loadingBuilder: (context, child, loadingProgress) {
                   //   if (loadingProgress == null) {
@@ -329,7 +329,7 @@ class FranchiseCard extends StatelessWidget {
             Container(
               padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
               decoration: const BoxDecoration(
-                  // color: Colors.yellow.shade100,
+                  // color: Colors.yellow.0,
                   borderRadius: BorderRadius.only(
                       bottomLeft: Radius.circular(8),
                       bottomRight: Radius.circular(8))),
@@ -349,6 +349,8 @@ class FranchiseCard extends StatelessWidget {
                             fontWeight: FontWeight.w500,
                             color: Colors.black,
                           ),
+                          overflow: TextOverflow.ellipsis,
+                          maxLines: 1,
                         ),
                         Text(
                           "20 Lakh - 30 Lakh",
@@ -357,6 +359,8 @@ class FranchiseCard extends StatelessWidget {
                             fontWeight: FontWeight.w500,
                             color: Colors.black,
                           ),
+                          overflow: TextOverflow.ellipsis,
+                          maxLines: 1,
                         ),
                       ],
                     ),
@@ -373,9 +377,81 @@ class FranchiseCard extends StatelessWidget {
                             fontWeight: FontWeight.w500,
                             color: Colors.black,
                           ),
+                          overflow: TextOverflow.ellipsis,
+                          maxLines: 1,
                         ),
                         Text(
                           "1200 - 2200",
+                          style: TextStyle(
+                            fontSize: 14,
+                            fontWeight: FontWeight.w500,
+                            color: Colors.black,
+                          ),
+                          overflow: TextOverflow.ellipsis,
+                          maxLines: 1,
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            Container(
+              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
+              decoration: const BoxDecoration(
+                  // color: Colors.yellow.0,
+                  borderRadius: BorderRadius.only(
+                      bottomLeft: Radius.circular(8),
+                      bottomRight: Radius.circular(8))),
+              child: Flex(
+                direction: Axis.horizontal, // Switch to Axis.vertical if needed
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: const [
+                  Flexible(
+                    fit: FlexFit.tight, // Ensures equal space allocation
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          "Franchise Outletssdds",
+                          style: TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.w500,
+                            color: Colors.black,
+                          ),
+                          overflow: TextOverflow.ellipsis,
+                          maxLines: 1,
+                        ),
+                        Text(
+                          "Less than 10",
+                          style: TextStyle(
+                            fontSize: 14,
+                            fontWeight: FontWeight.w500,
+                            color: Colors.black,
+                          ),
+                          overflow: TextOverflow.ellipsis,
+                          maxLines: 1,
+                        ),
+                      ],
+                    ),
+                  ),
+                  Flexible(
+                    fit: FlexFit.tight,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          "Categery / Brand",
+                          style: TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.w500,
+                            color: Colors.black,
+                          ),
+                          overflow: TextOverflow.ellipsis,
+                          maxLines: 1,
+                        ),
+                        Text(
+                          "Food / Chaatway",
                           style: TextStyle(
                             fontSize: 14,
                             fontWeight: FontWeight.w500,

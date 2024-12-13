@@ -57,37 +57,59 @@ Widget profileCard(
                     ),
                   ),
                   const SizedBox(height: 0),
-                  Row(
-                    children: [
-                      const Text(
-                        "View Profile",
-                        style: TextStyle(
-                          fontSize: 16,
-                          color: Colors.blue,
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => ProfileCardScreen(
+                            name: name ?? "Unknown Name", // Default if null
+                            mobileno:
+                                mobileno ?? "Unknown Number", // Default if null
+                            image: image ?? "",
+                          ),
                         ),
-                      ),
-                      IconButton(
-                        onPressed: () {
-                          // Handle button press
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => ProfileCardScreen(
-                                name: name ?? "Unknown Name", // Default if null
-                                mobileno: mobileno ??
-                                    "Unknown Number", // Default if null
-                                image: image ?? "",
-                              ),
-                            ),
-                          );
-                        },
-                        icon: const Icon(
+                      );
+                    },
+                    child: Row(
+                      children: const [
+                        Text(
+                          "View Profile",
+                          style: TextStyle(
+                            fontSize: 16,
+                            color: Colors.blue,
+                          ),
+                        ),
+
+                        Icon(
                           Icons.chevron_right, // Replace with your desired icon
                           size: 25,
                           color: Colors.blue,
                         ),
-                      ),
-                    ],
+
+                        // IconButton(
+                        //   onPressed: () {
+                        //     // Handle button press
+                        //     Navigator.push(
+                        //       context,
+                        //       MaterialPageRoute(
+                        //         builder: (context) => ProfileCardScreen(
+                        //           name: name ?? "Unknown Name", // Default if null
+                        //           mobileno: mobileno ??
+                        //               "Unknown Number", // Default if null
+                        //           image: image ?? "",
+                        //         ),
+                        //       ),
+                        //     );
+                        //   },
+                        //   icon: const Icon(
+                        //     Icons.chevron_right, // Replace with your desired icon
+                        //     size: 25,
+                        //     color: Colors.blue,
+                        //   ),
+                        // ),
+                      ],
+                    ),
                   ),
                 ],
               ),

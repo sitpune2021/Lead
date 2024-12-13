@@ -183,7 +183,7 @@ class CustomerOnboardingCard extends StatelessWidget {
                 borderRadius: BorderRadius.all(Radius.circular(8)),
                 child: Image.network(
                   imageurl, // Replace with your image asset path
-                  height: 250,
+                  height: 200,
                   fit: BoxFit.cover,
                   // loadingBuilder: (context, child, loadingProgress) {
                   //   if (loadingProgress == null) {
@@ -220,7 +220,7 @@ class CustomerOnboardingCard extends StatelessWidget {
 
             // Earnings and Share Button Section
             Container(
-              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
+              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 0),
               decoration: BoxDecoration(
                   border: Border.all(color: Colors.grey),
                   color: const Color.fromARGB(255, 246, 232, 157),
